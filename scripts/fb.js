@@ -2,10 +2,6 @@ const express = require('express');
 const admin = require('firebase-admin');
 const serviceAccount = require('./fbAuth/fb.json');
 
-
-
- 
-
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://sss-005-default-rtdb.asia-southeast1.firebasedatabase.app"
@@ -14,7 +10,6 @@ admin.initializeApp({
 const app = express();
 const port = 3000;
 
-// Define a route to update the "Master/Timestamp" node
 app.get('/updateTimestamp', (req, res) => {
   const databaseRef = admin.database().ref('Master/Timestamp');
   
