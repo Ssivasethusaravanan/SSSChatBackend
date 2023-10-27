@@ -4,13 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "./scripts/fb.js",
+    "start": "node ./scripts/fb.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.3.1",
+    "ethers": "^6.8.0",
     "express": "^4.18.2",
-    "firebase-admin": "^11.11.0"
+    "firebase-admin": "^11.11.0",
+    "path": "^0.12.7"
   }
 }

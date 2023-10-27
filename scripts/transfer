@@ -1,0 +1,28 @@
+const { ethers } = require("ethers");
+const dotenv = require('dotenv').config();
+const providerUrl = "https://polygon-mumbai.infura.io/v3/aadf5dfdd15d4af8ab7fac2096a821c4";
+const privateKey = process.env.PRIVATE_KEY;
+const contractAddress = "0x266409e56cD1175c66A26538C3619e1feC1B8392";
+const provider = new ethers.JsonRpcProvider(providerUrl);
+const wallet = new ethers.Wallet(privateKey, provider);
+const contract = new ethers.Contract(contractAddress, [
+  "function transferTokens(address to, uint256 amount) external returns (bool)",
+], wallet);
+
+const transferTokens = async function (toaddress, res) {
+  try {
+    const toAddress = toaddress;
+    const amount = ethers.parseEther("0.1");
+
+    const tx = await contract.transferTokens(toAddress, amount,{ gasLimit: 200000 });
+    await tx.wait();
+
+    console.log(`Transferred ${ethers.formatEther(amount)} tokens to ${toAddress}`);
+      res.status(200).send(`Transferred ${ethers.formatEther(amount)} tokens to ${toAddress}`);
+  } catch (error) {
+    console.error("Error transferring tokens:", error);
+      res.status(500).send(`Error transferring tokens: ${error.message}`);
+  }
+};
+
+module.exports.transferTokens = transferTokens;
