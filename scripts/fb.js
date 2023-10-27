@@ -2,7 +2,7 @@ const express = require('express');
 const admin = require('firebase-admin');
 const path = require('path');
 const bodyParser = require('body-parser'); // Add body-parser middleware
-const { transferTokens } = require('./transfer');
+const { transferTokens } = require('./tokentr');
 const serviceAccount = require(path.join(__dirname, 'fb.json'));
 
 admin.initializeApp({
@@ -31,9 +31,10 @@ app.get('/updateTimestamp', (req, res) => {
 
 app.post('/transferToken', async (req, res) => {
   const { toaddress } = req.body; // Extract the recipient address from the request body
-
+const {amountToSend} = req.body;
   try {
-    await transferTokens(toaddress, res);
+    const response = await transferTokens(toaddress,amountToSend, res);
+    res.status(200).send(response);
   } catch (error) {
     console.error("Error transferring tokens:", error);
     res.status(500).send(`Error transferring tokens: ${error.message}`);
