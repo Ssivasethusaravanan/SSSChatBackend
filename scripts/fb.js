@@ -1,6 +1,10 @@
 const express = require('express');
 const admin = require('firebase-admin');
-const serviceAccount = require('fbAuth/fb.json');
+const path = require('path');
+const serviceAccount = require(path.join(__dirname, 'fb.json'));
+
+ 
+ 
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
