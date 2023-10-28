@@ -17,8 +17,8 @@ const port = 3000;
 app.use(bodyParser.json());
 // Middleware to verify the API key
 app.use((req, res, next) => {
-  const apiKey = req.headers['API_KEY'];
-  const validApiKey = process.env.YOUR_API_KEY; // Replace with the actual environment variable name you've used in your .env file
+  const apiKey = req.headers['CHAT_API_KEY'];
+  const validApiKey = process.env.API_KEY; // Replace with the actual environment variable name you've used in your .env file
 
   if (!apiKey || apiKey !== validApiKey) {
     return res.status(401).json({ error: 'Unauthorized. Invalid API key.' });
