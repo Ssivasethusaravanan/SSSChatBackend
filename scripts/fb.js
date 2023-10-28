@@ -17,7 +17,7 @@ const port = 3000;
 app.use(bodyParser.json());
 // Middleware to verify the API key
 app.use((req, res, next) => {
-  const apiKey = req.headers['correct_chat_apikey'];
+  const apiKey = req.headers['API_KEY'];
   const validApiKey = process.env.YOUR_API_KEY; // Replace with the actual environment variable name you've used in your .env file
 
   if (!apiKey || apiKey !== validApiKey) {
