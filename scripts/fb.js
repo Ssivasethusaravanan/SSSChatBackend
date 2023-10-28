@@ -15,6 +15,20 @@ const port = 3000;
 
 // Middleware to parse JSON requests
 app.use(bodyParser.json());
+// Middleware to verify the API key
+app.use((req, res, next) => {
+  const apiKey = req.headers['correct_chat_apikey'];
+  const validApiKey = process.env.YOUR_API_KEY; // Replace with the actual environment variable name you've used in your .env file
+
+  if (!apiKey || apiKey !== validApiKey) {
+    return res.status(401).json({ error: 'Unauthorized. Invalid API key.' });
+  } else {
+    // If the API key is valid, you can optionally log that it's valid or perform other actions.
+    // For example, you can log it:
+    console.log('API key is valid');
+    next(); // Continue to the next middleware or route if the API key is valid
+  }
+});
 
 app.get('/updateTimestamp', (req, res) => {
   const databaseRef = admin.database().ref('Master/Timestamp');
