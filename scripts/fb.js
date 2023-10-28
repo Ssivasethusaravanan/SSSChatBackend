@@ -1,7 +1,7 @@
 const express = require('express');
 const admin = require('firebase-admin');
 const path = require('path');
-const bodyParser = require('body-parser'); // Add body-parser middleware
+const bodyParser = require('body-parser');
 const { transferTokens } = require('./tokentr');
 const serviceAccount = require(path.join(__dirname, 'fb.json'));
 
@@ -13,18 +13,18 @@ admin.initializeApp({
 const app = express();
 const port = 3000;
 
-// Middleware to parse JSON requests
 app.use(bodyParser.json());
-// Middleware to verify the API key
+
 app.use((req, res, next) => {
-  const apiKey = req.headers['CHAT_API_KEY'];
-  const validApiKey = process.env.API_KEY; // Replace with the actual environment variable name you've used in your .env file
+  const apiKey = req.headers['api_key_chat'];
+  const validApiKey = process.env.API_KEY;
+  console.log('API Key from Header:', apiKey);
+  console.log('Valid API Key from .env:', validApiKey);
+  console.log('Headers:', req.headers);
 
   if (!apiKey || apiKey !== validApiKey) {
     return res.status(401).json({ error: 'Unauthorized. Invalid API key.' });
   } else {
-    // If the API key is valid, you can optionally log that it's valid or perform other actions.
-    // For example, you can log it:
     console.log('API key is valid');
     next(); // Continue to the next middleware or route if the API key is valid
   }
@@ -32,7 +32,6 @@ app.use((req, res, next) => {
 
 app.get('/updateTimestamp', (req, res) => {
   const databaseRef = admin.database().ref('Master/Timestamp');
-
   // Update the timestamp to a new value (e.g., the current time).
   databaseRef.set(new Date().toISOString(), (error) => {
     if (error) {
@@ -44,10 +43,10 @@ app.get('/updateTimestamp', (req, res) => {
 });
 
 app.post('/transferToken', async (req, res) => {
-  const { toaddress } = req.body; // Extract the recipient address from the request body
-const {amountToSend} = req.body;
+  const { toaddress } = req.body;
+  const { amountToSend } = req.body;
   try {
-    const response = await transferTokens(toaddress,amountToSend, res);
+    const response = await transferTokens(toaddress, amountToSend, res);
     res.status(200).send(response);
   } catch (error) {
     console.error("Error transferring tokens:", error);
