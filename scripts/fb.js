@@ -18,7 +18,9 @@ app.use(bodyParser.json());
 app.use((req, res, next) => {
   const apiKey = req.headers['api_key_chat'];
   const validApiKey = process.env.API_KEY;
-  
+  console.log('API Key from Header:', apiKey);
+  console.log('Valid API Key from .env:', validApiKey);
+  console.log('Headers:', req.headers);
 
   if (!apiKey || apiKey !== validApiKey) {
     return res.status(401).json({ error: 'Unauthorized. Invalid API key.' });
