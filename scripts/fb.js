@@ -3,7 +3,7 @@ const admin = require('firebase-admin');
 const path = require('path');
 const bodyParser = require('body-parser');
 const { transferTokens } = require('./tokentr');
-const { getBalances } = require('./balances');
+const { getbal, getBalances } = require('./balances');
 const serviceAccount = require(path.join(__dirname, 'fb.json'));
 
 admin.initializeApp({
@@ -55,14 +55,17 @@ app.post('/transferToken', async (req, res) => {
   }
 });
 
-app.post('/getBalances', async(req,res)=>{
+app.get('/getBalances', async(req,res)=>{
   const{ownerAddress} = req.body;
   try{
     const response = await getBalances(ownerAddress);
-    res.status(200).send(response)
+    console.log("response in ", response);
+
+    return res.status(200).send(response);
   }catch(ex){
-    res.status(500).send(`Error transferring tokens: ${ex.message}`);
     console.error("Error transferring tokens:", ex);
+
+   return res.status(500).send(`Error transferring tokens: ${ex.message}`);
   }
 }
 );

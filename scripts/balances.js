@@ -6,7 +6,8 @@ const config = {
   network: Network.MATIC_MUMBAI,
 };
 const alchemy = new Alchemy(config);
-
+const tokenInfoMap = {};
+const balanceAndSymbol = {};
 const getBalances = async (ownerAddress) => {
   // Wallet address
   const address = ownerAddress;
@@ -35,10 +36,15 @@ const getBalances = async (ownerAddress) => {
     // Compute token balance in human-readable format
     balance = balance / Math.pow(10, metadata.decimals);
     balance = balance.toFixed(2);
+//var combinedBalance = balance+' '+ metadata.symbol;
+tokenInfoMap[metadata.symbol] = balance;
 
     // Print name, balance, and symbol of token
-    console.log(`${i++}. ${metadata.name}: ${balance} ${metadata.symbol}`);
+   
   }
+  console.log("Token Information Map:", tokenInfoMap);
+
+  return tokenInfoMap;
 };
 
  
