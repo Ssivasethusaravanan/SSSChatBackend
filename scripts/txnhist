@@ -1,0 +1,20 @@
+// Setup: npm install alchemy-sdk
+ const { Alchemy, Network } =  require("alchemy-sdk") ;
+
+const config = {
+  apiKey: "JVLV4xu3CjSUKUNEfXXJSuJ3xz6ZrCLe",
+  network: Network.MATIC_MUMBAI,
+};
+// var datag;
+const alchemy = new Alchemy(config);
+const getHistory  = async (toAddress ) => { 
+   let datag =   await alchemy.core.getAssetTransfers({
+  fromBlock: "0x0",
+  category: ["external", "erc20", "erc721", "erc1155"],
+fromAddress: toAddress
+});
+console.log(datag);
+return datag;
+ }
+ module.exports.getHistory = getHistory;
+  //getHistory();

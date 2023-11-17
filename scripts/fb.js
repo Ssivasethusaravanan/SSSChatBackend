@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const { transferTokens } = require('./tokentr');
 const { getbal, getBalances } = require('./balances');
 const serviceAccount = require(path.join(__dirname, 'fb.json'));
-
+const {getHistory} =  require('./txnhist');
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://sss-005-default-rtdb.asia-southeast1.firebasedatabase.app"
@@ -59,6 +59,20 @@ app.get('/getBalances', async(req,res)=>{
   const{ownerAddress} = req.body;
   try{
     const response = await getBalances(ownerAddress);
+    console.log("response in ", response);
+
+    return res.status(200).send(response);
+  }catch(ex){
+    console.error("Error transferring tokens:", ex);
+
+   return res.status(500).send(`Error transferring tokens: ${ex.message}`);
+  }
+});
+
+app.get('/getTxnHistory', async(req,res)=>{
+  const{toAddress} = req.body;
+  try{
+    const response = await getHistory(toAddress);
     console.log("response in ", response);
 
     return res.status(200).send(response);
