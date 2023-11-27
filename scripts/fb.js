@@ -69,11 +69,11 @@ app.get('/getBalances', async(req,res)=>{
   }
 });
 
-app.get('/getTxnHistory', async(req,res)=>{
+app.post('/getTxnHistory', async(req,res)=>{
   const{toAddress} = req.body;
   try{
     const response = await getHistory(toAddress);
-    console.log("response in ", response);
+    console.log("response in ", toAddress);
 
     return res.status(200).send(response);
   }catch(ex){

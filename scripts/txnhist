@@ -8,13 +8,13 @@ const config = {
 // var datag;
 const alchemy = new Alchemy(config);
 const getHistory  = async (toAddress ) => { 
-   let datag =   await alchemy.core.getAssetTransfers({
+   let datag =   await alchemy.core. getAssetTransfers({
   fromBlock: "0x0",
   category: ["external", "erc20", "erc721", "erc1155"],
 fromAddress: toAddress
 });
 console.log(datag);
-return datag;
+return datag;  
  }
  module.exports.getHistory = getHistory;
   //getHistory();
