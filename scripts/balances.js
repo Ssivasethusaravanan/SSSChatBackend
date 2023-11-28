@@ -36,7 +36,7 @@ const getBalances = async (ownerAddress) => {
     balance = balance / Math.pow(10, metadata.decimals);
     balance = balance.toFixed(2);
 var combinedBalance = balance+' '+ metadata.symbol;
-tokenInfoMap[metadata.symbol] = combinedBalance;
+tokenInfoMap[metadata.name] = combinedBalance;
 
     // Print name, balance, and symbol of token
    
