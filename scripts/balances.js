@@ -32,12 +32,11 @@ const getBalances = async (ownerAddress) => {
 
     // Get metadata of token
     const metadata = await alchemy.core.getTokenMetadata(token.contractAddress);
-
-    // Compute token balance in human-readable format
+     // Compute token balance in human-readable format
     balance = balance / Math.pow(10, metadata.decimals);
     balance = balance.toFixed(2);
-//var combinedBalance = balance+' '+ metadata.symbol;
-tokenInfoMap[metadata.symbol] = balance;
+var combinedBalance = balance+' '+ metadata.symbol;
+tokenInfoMap[metadata.symbol] = combinedBalance;
 
     // Print name, balance, and symbol of token
    
