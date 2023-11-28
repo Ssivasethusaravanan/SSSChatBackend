@@ -55,7 +55,7 @@ app.post('/transferToken', async (req, res) => {
   }
 });
 
-app.get('/getBalances', async(req,res)=>{
+app.post('/getBalances', async(req,res)=>{
   const{ownerAddress} = req.body;
   try{
     const response = await getBalances(ownerAddress);
