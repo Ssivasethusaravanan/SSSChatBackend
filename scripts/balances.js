@@ -35,7 +35,7 @@ const getBalances = async (ownerAddress) => {
      // Compute token balance in human-readable format
     balance = balance / Math.pow(10, metadata.decimals);
     balance = balance.toFixed(2);
-var combinedBalance = balance+' '+ metadata.symbol;
+var combinedBalance = balance+' '+ (metadata.symbol);
 tokenInfoMap[metadata.name] = combinedBalance;
 
     // Print name, balance, and symbol of token
@@ -45,7 +45,7 @@ tokenInfoMap[metadata.name] = combinedBalance;
 
   return tokenInfoMap;
 };
-
+//  
  
   
 module.exports.getBalances = getBalances;
