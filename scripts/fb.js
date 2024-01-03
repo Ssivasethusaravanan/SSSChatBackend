@@ -4,6 +4,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const { transferTokens } = require('./tokentr');
 const { getbal, getBalances } = require('./balances');
+const {createAccountFromIdToken} = require('./accountcreation')
 const serviceAccount = require(path.join(__dirname, 'fb.json'));
 const {getHistory} =  require('./txnhist');
 admin.initializeApp({
@@ -19,9 +20,9 @@ app.use(bodyParser.json());
 app.use((req, res, next) => {
   const apiKey = req.headers['api_key_chat'];
   const validApiKey = process.env.API_KEY;
-  console.log('API Key from Header:', apiKey);
-  console.log('Valid API Key from .env:', validApiKey);
-  console.log('Headers:', req.headers);
+  // console.log('API Key from Header:', apiKey);
+  // console.log('Valid API Key from .env:', validApiKey);
+  // console.log('Headers:', req.headers);
 
   if (!apiKey || apiKey !== validApiKey) {
     return res.status(401).json({ error: 'Unauthorized. Invalid API key.' });
@@ -42,7 +43,16 @@ app.get('/updateTimestamp', (req, res) => {
     }
   });
 });
-
+app.post('/getAccount', async (req, res) => {
+  const { idtoken } = req.body;
+   try {
+    const response = await createAccountFromIdToken(idtoken);
+    res.status(200).send(response);
+  } catch (error) {
+    console.error("Error transferring tokens:", error);
+    res.status(500).send(`Error transferring tokens: ${error.message}`);
+  }
+});
 app.post('/transferToken', async (req, res) => {
   const { toaddress } = req.body;
   const { amountToSend } = req.body;
