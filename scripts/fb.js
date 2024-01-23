@@ -3,6 +3,7 @@ const admin = require('firebase-admin');
 const path = require('path');
 const punycode = require('punycode');
 const bodyParser = require('body-parser');
+const{mintNFT} = require('./mint')
 const { transferTokens } = require('./tokentr');
 const { getbal, getBalances } = require('./balances');
 const {createAccountFromIdToken} = require('./accountcreation')
@@ -80,6 +81,20 @@ app.post('/getBalances', async(req,res)=>{
   }
 });
 
+app.post('/mintNFT', async(req,res)=>{
+  const{toAddress} = req.body;
+  const{url} = req.body;
+  try{
+    const response = await mintNFT(toAddress,url);
+    console.log("response in ", response);
+
+    return res.status(200).send(response);
+  }catch(ex){
+    console.error("Error transferring tokens:", ex);
+
+   return res.status(500).send(`Error transferring tokens: ${ex.message}`);
+  }
+});
 app.post('/getTxnHistory', async(req,res)=>{
   const{toAddress} = req.body;
   try{
