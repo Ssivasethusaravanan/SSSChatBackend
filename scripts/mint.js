@@ -55,6 +55,7 @@ const mintNFT = async function mintNFT(toAddress, url) {
     //  await postToSlack(errorMessage);
     return err;
   }
+  //kflnofnvolfvn
 
   console.log("Completed");
   return true;
