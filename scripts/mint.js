@@ -10,13 +10,12 @@ const contractAddress = "0x54C0f6905aFEE63f49c392937e41408223757198";
 const mintNFT = async function mintNFT(toAddress, url) {
   try {
     console.log("Starting... event address is");
-    mintTo = "0xeFb7425877ec5C0A6687d2824248DBFe12f22f21";
+    mintTo =  toAddress;
 
     networkDetails =
       "https://polygon-mumbai.g.alchemy.com/v2/JVLV4xu3CjSUKUNEfXXJSuJ3xz6ZrCLe";
 
-    metadataUrl =
-      "https://firebasestorage.googleapis.com/v0/b/sss-005.appspot.com/o/one.json?alt=media&token=f5d3941b-3f4f-4723-b566-ed65e22ce585";
+    metadataUrl =  url;
   } catch (err) {
     console.log("Starting... error with event processing ", err);
     return "error processing NFT mint";
@@ -55,7 +54,6 @@ const mintNFT = async function mintNFT(toAddress, url) {
     //  await postToSlack(errorMessage);
     return err;
   }
-  //kflnofnvolfvn
 
   console.log("Completed");
   return true;
