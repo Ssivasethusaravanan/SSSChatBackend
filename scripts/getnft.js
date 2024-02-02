@@ -14,7 +14,7 @@ async function getNFT(address, chain) {
       "mediaItems": false,
       "address": address
     });
-
+return response;
     // Log the raw response
     console.log(response.raw);
   } catch (e) {
