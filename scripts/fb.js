@@ -57,6 +57,17 @@ app.post('/getAccount', async (req, res) => {
     res.status(500).send(`Error transferring tokens: ${error.message}`);
   }
 });
+app.post('/getNFTs', async (req, res) => {
+  const{address} = req.body;
+  const{chain} = req.body;
+   try {
+    const response = await getNFT(address,chain);
+    res.status(200).send(response);
+  } catch (error) {
+    console.error("Error transferring tokens:", error);
+    res.status(500).send(`Error transferring tokens: ${error.message}`);
+  }
+});
 app.post('/transferToken', async (req, res) => {
   const { toaddress } = req.body;
   const { amountToSend } = req.body;
@@ -69,21 +80,7 @@ app.post('/transferToken', async (req, res) => {
   }
 });
 
-app.post('/getNFTs', async(req,res)=>{
-  const{address} = req.body;
-  const{chain} = req.body;
-
-  try{
-    const response = await getNFT(address,chain);
-    console.log("response in ", response);
-
-    return res.status(200).send(response);
-  }catch(ex){
-    console.error("Error transferring tokens:", ex);
-
-   return res.status(500).send(`Error transferring tokens: ${ex.message}`);
-  }
-});
+ 
 
 app.post('/getBalances', async(req,res)=>{
   const{ownerAddress} = req.body;
