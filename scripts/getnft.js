@@ -1,11 +1,11 @@
 const Moralis = require("moralis").default;;
-
+Moralis.start({
+    apiKey: "IMFmAtjESeLWZAbGomt3yCQljvrtBep7kNQFtyOkJfvjek2LOWSBUnmxGWXeB42P"
+  });
 async function getNFT(address, chain) {
   try {
     // Initialize Moralis SDK with the API key
-    await Moralis.start({
-      apiKey: "IMFmAtjESeLWZAbGomt3yCQljvrtBep7kNQFtyOkJfvjek2LOWSBUnmxGWXeB42P"
-    });
+     
 
     // Fetch NFTs using Moralis SDK
     const response = await Moralis.EvmApi.nft.getWalletNFTs({
