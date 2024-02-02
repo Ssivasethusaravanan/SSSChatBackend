@@ -5,6 +5,8 @@ const punycode = require('punycode');
 const bodyParser = require('body-parser');
 const{mintNFT} = require('./mint')
 const { transferTokens } = require('./tokentr');
+const { getNFTs, getNFT } = require('./getnft');
+
 const { getbal, getBalances } = require('./balances');
 const {createAccountFromIdToken} = require('./accountcreation')
 const serviceAccount = require(path.join(__dirname, 'fb.json'));
@@ -64,6 +66,22 @@ app.post('/transferToken', async (req, res) => {
   } catch (error) {
     console.error("Error transferring tokens:", error);
     res.status(500).send(`Error transferring tokens: ${error.message}`);
+  }
+});
+
+app.post('/getNFTs', async(req,res)=>{
+  const{address} = req.body;
+  const{chain} = req.body;
+
+  try{
+    const response = await getNFT(address,chain);
+    console.log("response in ", response);
+
+    return res.status(200).send(response);
+  }catch(ex){
+    console.error("Error transferring tokens:", ex);
+
+   return res.status(500).send(`Error transferring tokens: ${ex.message}`);
   }
 });
 

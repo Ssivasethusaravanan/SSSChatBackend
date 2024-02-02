@@ -1,8 +1,7 @@
 const ethers = require("ethers");
-
+const Moralis = require('moralis');
 const abi = require("./SSSTtoken.json");
 require("dotenv").config();
-
 let networkDetails = " ";
 let mintTo = "0";
 let metadataUrl = " ";
@@ -58,4 +57,25 @@ const mintNFT = async function mintNFT(toAddress, url) {
   console.log("Completed");
   return true;
 };
+const mintNft = async function mint(toAddress,url){
+  
+
+try {
+  await Moralis.start({
+    apiKey: "YOUR_API_KEY"
+  });
+
+  const response = await Moralis.EvmApi.nft.getWalletNFTs({
+    "chain": "0x1",
+    "format": "decimal",
+    "mediaItems": false,
+    "address": "0xff3879b8a363aed92a6eaba8f61f1a96a9ec3c1e"
+  });
+
+  console.log(response.raw);
+} catch (e) {
+  console.error(e);
+}
+}
+
 module.exports.mintNFT = mintNFT;
